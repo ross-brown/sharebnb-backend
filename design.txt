@@ -2,7 +2,8 @@ Database
 
 Tables
     Users - first_name, last_name, password, username, email
-    Listing - id, title, type(home, apt, etc), photo, price, description, location, owner_id
+    Listing - id, title, type(home, apt, etc), photo_url, price, description, location, owner_username
+
     Booking - user_id, listing_id
     Messages - message_id, user_to, user_from, sent_at, body
 
@@ -76,3 +77,4 @@ WISHLIST:
 Separate table for unavailble dates (Unvailable - avaiable_id, listing_id, start_date, end_date)
 Google Map API that shows where the listings are
 Admins?????
+Filter by type, price, location, etc.....

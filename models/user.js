@@ -9,9 +9,9 @@ import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressErr
 class User {
   constructor({ username, firstName, lastName, email }) {
     this.username = username,
-    this.firstName = firstName,
-    this.lastName = lastName,
-    this.email = email
+      this.firstName = firstName,
+      this.lastName = lastName,
+      this.email = email;
   }
 
   /** authenticate user with username/password
@@ -94,7 +94,7 @@ class User {
 
   /** Get a user by username
    *
-   *  Return {username, firstName, lastName, email, bookings, bbookngs}
+   *  Return {username, firstName, lastName, email, bookings, listings}
    *   where listings : [ listingId, title, type ]
    *   where booking : [ listingId, userId ]
    *
@@ -123,7 +123,7 @@ class User {
         FROM bookings
         WHERE username = $1`, [username]);
 
-    const user = new User(userData)
+    const user = new User(userData);
 
     user.listings = listingRes.rows;
     user.bookings = bookingRes.rows;
@@ -146,11 +146,11 @@ class User {
           first_name AS firstName,
           last_name AS lastName,
           email`,
-    [this.firstName, this.lastName, this.email, this.username])
+      [this.firstName, this.lastName, this.email, this.username]);
 
     const user = result.rows[0];
 
-    if(!user) throw new NotFoundError(`No user: ${this.username}`)
+    if (!user) throw new NotFoundError(`No user: ${this.username}`);
 
     return new User(user);
   }
@@ -165,6 +165,8 @@ class User {
     );
     const user = result.rows[0];
 
-    if (!user) throw new NotFoundError(`No user: ${this.username}`)
+    if (!user) throw new NotFoundError(`No user: ${this.username}`);
   }
 }
+
+export { User };
