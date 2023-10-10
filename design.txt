@@ -1,10 +1,9 @@
 Database
 
 Tables
-    Users - first_name, last_name, password, id, username, email
-    Listing - id, title, type(home, apt, etc), photo, price, description, location, owner_id,
-    Unvailable - avaiable_id, listing_id, start_date, end_date
-    Booking - booking_id, user_id, listing_id, avaiable_id
+    Users - first_name, last_name, password, username, email
+    Listing - id, title, type(home, apt, etc), photo, price, description, location, owner_id
+    Booking - user_id, listing_id
     Messages - message_id, user_to, user_from, sent_at, body
 
     Relationships:
@@ -69,3 +68,11 @@ Models
         create booking
         delete booking -remove those unavailable Database
 
+
+
+
+
+WISHLIST:
+Separate table for unavailble dates (Unvailable - avaiable_id, listing_id, start_date, end_date)
+Google Map API that shows where the listings are
+Admins?????
