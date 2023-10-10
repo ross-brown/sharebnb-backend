@@ -1,0 +1,71 @@
+Database
+
+Tables
+    Users - first_name, last_name, password, id, username, email
+    Listing - id, title, type(home, apt, etc), photo, price, description, location, owner_id,
+    Unvailable - avaiable_id, listing_id, start_date, end_date
+    Booking - booking_id, user_id, listing_id, avaiable_id
+    Messages - message_id, user_to, user_from, sent_at, body
+
+    Relationships:
+
+    Users -< Listings
+    Listing -< Unavailable
+    Users -< Bookings
+    User -< Messages
+
+
+Backend Routes
+
+Sharebnb RESTful API
+
+Auth
+    post    /auth/token     logging in
+    post    /auth/register  register for sharebnb
+
+Users
+    get     /users           all Users
+    get     /users/username  get one user --all listings and bookings
+    post    /users           create new user --admin
+    patch   /username        update user
+    delete  /username        delete user
+
+Listing
+    get     /listing         all Listings
+    get     /listing/id      get one listing --all unavailabilities
+    post    /listing         create a listing
+    post    /listing/id/book book a listing --needs user_id in the body
+    patch   /listing/id      update a listing
+    delete  /listing/id      delete a listing
+
+Booking
+    delete  /booking/id     cancel a booking
+
+Messages
+    get     /message/id     get a message, based on logged in user
+    post    /message        send a message, based on logged in user
+
+
+Models
+    User
+        authenticate
+        register
+        get all users
+        get by id -gets listings and bookings
+        update user
+        delete user
+
+    Listing
+        get by id
+        get all listings
+        create listing
+            adds listing to listing Tables
+
+    Message
+        get by id
+        create message
+
+    Booking
+        create booking
+        delete booking -remove those unavailable Database
+
