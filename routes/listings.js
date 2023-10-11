@@ -19,6 +19,8 @@ const router = express.Router();
  * Authorization required: loggedIn
  */
 
+//TODO: here (i think) is where we need to get req.file and call the s3 function
+//not sure how exactly the response will look like from a form submit here
 router.post("/", async function (req, res, next) {
   //jsonschema
 
