@@ -66,9 +66,22 @@ Models
 
 
 WEDNESDAY TODO:
-Finish writing all the models
-Figure out how the photo_url is gonna work with s3
- - multer (adds req.file, form enctype = "mutlipart/formdata")
+Finish writing all the models -
+1. message model -messagely
+- create message
+- get message
+2. User model
+- get sent Messages
+- get received Messages
+3. Message Routes
+- get /id
+- post /
+4. User Routes
+- get /:username/inbox
+- get /:username/sent
+Auth Routes
+Test some stuff
+?Add admins? -change user table, user schema, user register model,
 
 STRETCH GOAL: finish most of the back end
 

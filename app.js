@@ -1,9 +1,10 @@
 /** Express app for ShareBnB */
 
 import express from "express";
-import cors from "cors"
+import cors from "cors";
 import usersRoutes from "./routes/users.js";
-import listingsRoutes from "./routes/listings.js"
+import listingsRoutes from "./routes/listings.js";
+import messagesRoutes from "./routes/messages.js";
 import { NotFoundError } from "./expressError.js";
 import { authenticateJWT } from "./middleware/auth.js";
 
@@ -15,6 +16,7 @@ app.use(authenticateJWT);
 
 app.use("/users", usersRoutes);
 app.use("/listings", listingsRoutes);
+app.use("/messages", messagesRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {

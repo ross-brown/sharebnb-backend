@@ -148,7 +148,7 @@ class User {
           email`,
       [this.firstName, this.lastName, this.email, this.username]);
 
-    console.log("result.rows=", result)
+    console.log("result.rows=", result);
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${this.username}`);
@@ -167,6 +167,40 @@ class User {
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${this.username}`);
+  }
+
+  /** Get user's sent messages
+ *
+ *  Return [{id, sender, recipient, body, sentAt}]
+ */
+  async getSentMessages() {
+    const result = await db.query(`
+    SELECT message_id AS "id",
+           user_to AS "recipient",
+           user_from AS "sender",
+           body,
+           sent_at AS "sentAt"
+    FROM messages
+    WHERE user_from = $1`, [this.username]);
+
+    return result.rows;
+  }
+
+  /** Get a user's received messages
+   *
+   *  Return [{id, sender, recipient, body, sentAt}]
+   */
+  async getReceivedMessages() {
+    const result = await db.query(`
+    SELECT message_id AS "id",
+           user_to AS "recipient",
+           user_from AS "sender",
+           body,
+           sent_at AS "sentAt"
+    FROM messages
+    WHERE user_to = $1`, [this.username]);
+
+    return result.rows;
   }
 }
 
