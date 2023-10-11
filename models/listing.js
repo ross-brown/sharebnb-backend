@@ -60,8 +60,6 @@ class Listing {
     return new Listing(listing);
   }
 
-
-
   /** Create WHERE clause for filters, to be used by functions that query
    * with filters.
    *
@@ -74,7 +72,6 @@ class Listing {
    *  vals: ['%Beach%']
    * }
    */
-
 
   static _filterWhereBuilder({ title }) {
     const whereParts = [];
@@ -91,8 +88,6 @@ class Listing {
 
     return { where, values };
   }
-
-
 
   /** Get a list of all listings
    *
@@ -111,15 +106,13 @@ class Listing {
             price,
             description,
             location,
-            owner_username AS "ownerUsername
+            owner_username AS "ownerUsername"
         FROM listings
         ${where}
         ORDER BY title`, values);
 
     return result.rows.map(listing => new Listing(listing));
   }
-
-
 
   /** Given a listing id, return data about the listing.
    *
@@ -129,7 +122,7 @@ class Listing {
    * Throws not found error if no such listing
    */
   static async get(id) {
-    const listingRes = db.query(`
+    const listingRes = await db.query(`
         SELECT id,
                title,
                type,
@@ -150,13 +143,44 @@ class Listing {
 
 
 
+  /** Book listing with a username
+   *
+   * Returns undefined.
+   */
+  async book(username) {
+    const result = await db.query(`
+      INSERT INTO bookings (username, listing_id)
+      VALUES ($1, $2)
+      RETURNING username, listing_id AS "listingId"
+    `, [username, this.id]);
+
+    return result.rows[0];
+  }
+
+
+  /** Unbook listing with a username
+   *
+   * Returns undefinded.
+   */
+
+  async unbook(username) {
+    const result = await db.query(`
+      DELETE FROM bookings
+      WHERE (username, listing_id) = ($1, $2)
+      RETURNING listing_id AS "listingId"
+    `, [username, this.id]);
+    const listing = result.rows[0];
+
+    if (!listing) throw new NotFoundError(`No booking: ${this.id}`);
+  }
+
   /** Update listing with data
    *
    *  Returns { id, title, type, photoUrl, price,
    *  description, location, ownerUsername }
    */
   async save() {
-    const result = db.query(`
+    const result = await db.query(`
       UPDATE listings
       SET title = $1,
           type = $2,
@@ -199,4 +223,4 @@ class Listing {
 }
 
 
-export default Listing ;
+export default Listing;

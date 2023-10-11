@@ -35,11 +35,9 @@ Listing
     get     /listing/id      get one listing --all unavailabilities
     post    /listing         create a listing
     post    /listing/id/book book a listing --needs user_id in the body
+    delete  /listing/id/book unbooks a listing
     patch   /listing/id      update a listing
     delete  /listing/id      delete a listing
-
-Booking
-    delete  /booking/id     cancel a booking
 
 Messages
     get     /message/id     get a message, based on logged in user
@@ -64,12 +62,6 @@ Models
     Message
         get by id
         create message
-
-    Booking
-        create booking
-        delete booking -remove those unavailable Database
-
-
 
 
 

@@ -1,4 +1,4 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { AWS_BUCKET_NAME, AWS_IMG_URL_BASE, AWS_REGION } from "../config.js";
 import { v4 as uuid } from "uuid";
 
@@ -7,9 +7,10 @@ const s3 = new S3Client({
 });
 
 
+/** uploads a file to s3 */
 async function uploadS3({ originalname, buffer, mimetype }) {
   const name = `${uuid()}-${originalname}`;
-  
+
   const params = {
     Bucket: AWS_BUCKET_NAME,
     Key: name,
@@ -30,6 +31,18 @@ async function readS3() {
   console.log(await Body.transformToString());
 }
 
+
+async function deleteS3(url) {
+  const fileName = url.replace(`${AWS_IMG_URL_BASE}/`, "");
+
+  const params = {
+    Bucket: AWS_BUCKET_NAME,
+    Key: fileName
+  };
+
+  await s3.send(new DeleteObjectCommand(params));
+}
+
 // upload();
 // read();
-export { uploadS3, readS3 };
+export { uploadS3, readS3, deleteS3 };

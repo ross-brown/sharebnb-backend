@@ -6,6 +6,7 @@ import jsonschema from "jsonschema";
 import newUserSchema from '../schemata/userNew.json' assert {type: 'json'};
 import updateUserSchema from '../schemata/userUpdate.json' assert {type: 'json'};
 import { createToken } from "../helpers/token.js";
+import { ensureCorrectUser } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -60,7 +61,7 @@ router.post("/", async function (req, res, next) {
  *  Returns instance of User with updated info
  *  {user : { username, firstName, lastName, email }}
  */
-router.patch("/:username", async function (req, res, next) {
+router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     updateUserSchema,
@@ -83,7 +84,7 @@ router.patch("/:username", async function (req, res, next) {
  *
  *  Deletes a user, returns { deleted: username }
  */
-router.delete("/:username", async function (req, res, next) {
+router.delete("/:username", ensureCorrectUser, async function (req, res, next) {
   const user = await User.get(req.params.username);
   await user.delete();
 

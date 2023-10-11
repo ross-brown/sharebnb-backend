@@ -3,6 +3,7 @@
 import jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../config.js";
 import { UnauthorizedError } from "../expressError.js";
+import Listing from "../models/listing.js";
 
 
 /** Middleware: Authenticate user.
@@ -39,6 +40,34 @@ function ensureLoggedIn(req, res, next) {
 }
 
 
+/** Middleware to use when they must provide a valid token & be user matching
+ *  username provided as route param.
+ *
+ *  If not, raises Unauthorized.
+ */
+
+function ensureCorrectUser(req, res, next) {
+  const username = res.locals.user?.username;
+  if (username && username === req.params.username) {
+    return next();
+  }
+
+  throw new UnauthorizedError();
+}
+
+async function ensureCorrectOwner(req, res, next) {
+  const listingId = req.params.id;
+  const username = res.locals.user?.username;
+
+  const listing = await Listing.get(listingId);
+
+  if (listing.ownerUsername === username) {
+    return next();
+  }
+
+  throw new UnauthorizedError(`You are not the owner of this property.`);
+}
 
 
-export { authenticateJWT, ensureLoggedIn };
+
+export { authenticateJWT, ensureLoggedIn, ensureCorrectUser, ensureCorrectOwner };
