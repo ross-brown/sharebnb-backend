@@ -1,20 +1,20 @@
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { BUCKET_REGION, S3_BUCKET } from "./config.js";
+import { AWS_BUCKET_NAME } from "./config.js";
 
-const s3Client = new S3Client({ region: "us-east-1" });
+const s3 = new S3Client();
 
 
 async function upload() {
-  await s3Client.send(new PutObjectCommand({
-    Bucket: S3_BUCKET,
+  await s3.send(new PutObjectCommand({
+    Bucket: AWS_BUCKET_NAME,
     Key: "my-first-object.txt",
     Body: "Hello World!"
   }));
 }
 
 async function read() {
-  const { Body } = await s3Client.send(new GetObjectCommand({
-    Bucket: S3_BUCKET,
+  const { Body } = await s3.send(new GetObjectCommand({
+    Bucket: AWS_BUCKET_NAME,
     Key: "my-first-object.txt"
   }));
 
