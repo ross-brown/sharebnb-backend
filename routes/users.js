@@ -32,6 +32,38 @@ router.get("/:username", async function (req, res, next) {
   return res.json({ user });
 });
 
+
+/** GET /users/:username/inbox
+ *
+ * Returns messages recieved by user like
+ *  {messages: [{id, sender, recipient, body, sentAt}, .....]}
+ *
+ * Authorization: correct user
+ */
+router.get("/:username/inbox", ensureCorrectUser, async function (req, res, next) {
+  const user = await User.get(req.params.username);
+  const messages = await user.getReceivedMessages();
+
+  return res.json({ messages });
+});
+
+
+/** GET /users/:username/sent
+ *
+ * Returns messages sent by user like
+ *  {messages: [{id, sender, recipient, body, sentAt}, .....]}
+ *
+ * Authorization: correct user
+ */
+router.get("/:username/sent", ensureCorrectUser, async function (req, res, next) {
+  const user = await User.get(req.params.username);
+  const messages = await user.getSentMessages();
+
+  return res.json({ messages });
+});
+
+
+
 /** POST /users
  *
  *  Add a new user (not the registration route!)
