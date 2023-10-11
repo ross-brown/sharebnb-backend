@@ -72,6 +72,7 @@ router.patch("/:username", async function (req, res, next) {
   }
 
   const userRes = await User.get(req.params.username);
+  //FIXME: maybe use something other than map since it returns an array
   Object.keys(req.body).map(key => userRes[key] = req.body[key]);
   const user = await userRes.save();
 
