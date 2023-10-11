@@ -1,12 +1,12 @@
 
 /** Database setup for ShareBnB */
 
-import { Client } from "pg";
-import { getDatabaseUri } from "./config";
+import pg from "pg";
+import { getDatabaseUri } from "./config.js";
 
 const databaseUri = getDatabaseUri();
 
-const db = new Client({
+const db = new pg.Client({
   connectionString: databaseUri
 });
 

@@ -1,8 +1,8 @@
 
-import { db } from "../db";
+import { db } from "../db.js";
 import bcrypt from "bcrypt";
-import { BCRYPT_WORK_FACTOR } from "../config";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError";
+import { BCRYPT_WORK_FACTOR } from "../config.js";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError.js";
 
 
 
@@ -63,7 +63,7 @@ class User {
 
     const result = await db.query(`
       INSERT INTO users (username, password, first_name, last_name, email)
-      VALUES ($1, $2, $3, $4. $5)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING
         username,
         first_name AS "firstName",
@@ -136,18 +136,19 @@ class User {
    *  Returns { username, firstName, lastName, email }
    */
   async save() {
-    const result = db.query(`
+    const result = await db.query(`
       UPDATE users
       SET first_name = $1,
           last_name = $2,
           email = $3
       WHERE username = $4
       RETURNING username,
-          first_name AS firstName,
-          last_name AS lastName,
+          first_name AS "firstName",
+          last_name AS "lastName",
           email`,
       [this.firstName, this.lastName, this.email, this.username]);
 
+    console.log("result.rows=", result)
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${this.username}`);

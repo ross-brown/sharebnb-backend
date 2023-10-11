@@ -1,10 +1,11 @@
 /** Routes for users */
 
 import express from "express";
-import User from "../models/user";
-import newUserSchema from '../schemata/userNew.json';
-import updateUserSchema from '../schemata/userUpdate.json';
-import { createToken } from "../helpers/token";
+import User from "../models/user.js";
+import jsonschema from "jsonschema";
+import newUserSchema from '../schemata/userNew.json' assert {type: 'json'};
+import updateUserSchema from '../schemata/userUpdate.json' assert {type: 'json'};
+import { createToken } from "../helpers/token.js";
 
 const router = express.Router();
 
@@ -87,3 +88,5 @@ router.delete("/:username", async function (req, res, next) {
 
   return res.json({ deleted: req.params.username });
 });
+
+export default router;

@@ -1,5 +1,5 @@
-import { db } from "../db";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError";
+import { db } from "../db.js";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError.js";
 
 
 

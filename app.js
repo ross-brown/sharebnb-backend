@@ -1,8 +1,8 @@
 /** Express app for ShareBnB */
 
 import express from "express";
-import {usersRoutes} from "./routes/users";
-import { NotFoundError } from "./expressError";
+import usersRoutes from "./routes/users.js";
+import { NotFoundError } from "./expressError.js";
 
 const app = express();
 
