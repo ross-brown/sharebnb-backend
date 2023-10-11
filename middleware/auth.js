@@ -1,7 +1,7 @@
 /** Convenience middleware to handle common auth cases in routes. */
 
 import jwt from "jsonwebtoken";
-import  { SECRET_KEY } from "../config.js";
+import { SECRET_KEY } from "../config.js";
 import { UnauthorizedError } from "../expressError.js";
 
 
@@ -28,7 +28,17 @@ function authenticateJWT(req, res, next) {
 
 }
 
+/** Middleware to use when they must be logged in.
+ *
+ * If not, raises Unauthorized.
+ */
+
+function ensureLoggedIn(req, res, next) {
+  if (res.locals.user?.username) return next();
+  throw new UnauthorizedError();
+}
 
 
 
-export { authenticateJWT }
+
+export { authenticateJWT, ensureLoggedIn };

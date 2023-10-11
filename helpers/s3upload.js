@@ -9,6 +9,7 @@ const s3 = new S3Client({
 
 async function uploadS3({ originalname, buffer, mimetype }) {
   const name = `${uuid()}-${originalname}`;
+  
   const params = {
     Bucket: AWS_BUCKET_NAME,
     Key: name,
@@ -17,7 +18,7 @@ async function uploadS3({ originalname, buffer, mimetype }) {
   };
 
   await s3.send(new PutObjectCommand(params));
-  return `${AWS_IMG_URL_BASE}/${originalname}`;
+  return `${AWS_IMG_URL_BASE}/${name}`;
 }
 
 async function readS3() {
