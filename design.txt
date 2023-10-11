@@ -73,8 +73,19 @@ Models
 
 
 
+WEDNESDAY TODO:
+Finish writing all the models
+Figure out how the photo_url is gonna work with s3
+ - multer (adds req.file, form enctype = "mutlipart/formdata")
+
+STRETCH GOAL: finish most of the back end
+
+
+
+
 WISHLIST:
 Separate table for unavailble dates (Unvailable - avaiable_id, listing_id, start_date, end_date)
 Google Map API that shows where the listings are
 Admins?????
 Filter by type, price, location, etc.....
+Add TypeScript to Express

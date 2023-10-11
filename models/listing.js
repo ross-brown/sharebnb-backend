@@ -16,8 +16,6 @@ class Listing {
   }
 
 
-
-
   /** Create a listing (from data), update db, return new listing data.
     *
     * data should be { title, type, photoUrl, price, description, location, ownerUsername }
@@ -26,7 +24,8 @@ class Listing {
     *
     * Returns { id, title, type, photoUrl, price, description, location, ownerUsername }
     **/
-  static async create({ title, type, photoUrl, price, description, location, ownerUsername }) {
+  static async create({ title, type, photoUrl, price,
+    description, location, ownerUsername }) {
     const userCheck = await db.query(`
                 SELECT username
                 FROM users
