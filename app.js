@@ -2,6 +2,7 @@
 
 import express from "express";
 import cors from "cors";
+import authRoutes from "./routes/auth.js";
 import usersRoutes from "./routes/users.js";
 import listingsRoutes from "./routes/listings.js";
 import messagesRoutes from "./routes/messages.js";
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use(authenticateJWT);
 
+app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/listings", listingsRoutes);
 app.use("/messages", messagesRoutes);
