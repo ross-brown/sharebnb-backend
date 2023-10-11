@@ -199,4 +199,4 @@ class Listing {
 }
 
 
-export { Listing };
+export default Listing ;

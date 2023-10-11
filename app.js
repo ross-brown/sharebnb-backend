@@ -3,6 +3,7 @@
 import express from "express";
 import cors from "cors"
 import usersRoutes from "./routes/users.js";
+import listingsRoutes from "./routes/listings.js"
 import { NotFoundError } from "./expressError.js";
 import { authenticateJWT } from "./middleware/auth.js";
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(authenticateJWT);
 
 app.use("/users", usersRoutes);
+app.use("/listings", listingsRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
