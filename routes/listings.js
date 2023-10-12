@@ -25,6 +25,7 @@ const router = express.Router();
  */
 router.post("/", upload.single("photo"), ensureLoggedIn, async function (req, res, next) {
    req.body.price = +req.body.price;
+   if (!req.file) throw new BadRequestError("Photo is required for a listing");
 
    const validator = jsonschema.validate(
       req.body,
