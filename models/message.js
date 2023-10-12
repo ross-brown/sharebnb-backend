@@ -1,5 +1,5 @@
 import { db } from "../db.js";
-import { NotFoundError } from "../expressError.js";
+import { BadRequestError, NotFoundError } from "../expressError.js";
 
 /** Model for messages */
 class Message {
@@ -8,7 +8,21 @@ class Message {
    *  Returns { id, recipient, sender, body, sentAt }
    *
    */
-  static async create({sender, recipient, body}){
+  static async create({ sender, recipient, body }) {
+    console.log("sender=", sender, "rec=", recipient);
+    const recipientCheck = await db.query(`
+              SELECT username
+              FROM users
+              WHERE username = $1`,
+      [recipient]);
+
+    const validRec = recipientCheck.rows[0];
+
+    if (!validRec) {
+      console.log("no recipient", recipient);
+      throw new BadRequestError(`Can't send to ${recipient}`);
+    }
+
     const result = await db.query(`
       INSERT INTO messages (user_to, user_from, body, sent_at)
       VALUES ($1, $2, $3, current_timestamp)
@@ -17,8 +31,8 @@ class Message {
                 user_from AS "sender",
                 body,
                 sent_at AS "sentAt"`, [
-        recipient, sender, body
-      ])
+      recipient, sender, body
+    ]);
 
     return result.rows[0];
   }
@@ -27,7 +41,7 @@ class Message {
    *
    *  Returns { id, recipient, sender, body, sentAt }
    */
-  static async get(id){
+  static async get(id) {
     const result = await db.query(`
     SELECT message_id AS "id",
            user_to AS "recipient",
@@ -39,7 +53,7 @@ class Message {
 
     let message = result.rows[0];
 
-    if (!message) throw new NotFoundError(`No such message: ${id}`)
+    if (!message) throw new NotFoundError(`No such message: ${id}`);
 
     return message;
   }
