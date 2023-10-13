@@ -95,8 +95,8 @@ class User {
   /** Get a user by username
    *
    *  Return {username, firstName, lastName, email, bookings, listings}
-   *   where listings : [ listingId, title, type ]
-   *   where booking : [ listingId, userId ]
+   *   where listings : [ listingId, title, price, photoUrl ]
+   *   where booking : [ listingId, title, price, photUrl ]
    *
    *  ThrowNotFoundError if user not found
    */
@@ -114,14 +114,22 @@ class User {
     if (!userData) throw new NotFoundError(`No user: ${username}`);
 
     const listingRes = await db.query(`
-        SELECT id AS listingId, title, type
+        SELECT id AS "listingId",
+               title,
+               price,
+               photo_url AS "photoUrl"
         FROM listings
         WHERE owner_username = $1`, [username]);
 
     const bookingRes = await db.query(`
-        SELECT username, listing_id AS listingId
-        FROM bookings
-        WHERE username = $1`, [username]);
+        SELECT b.username,
+               b.listing_id AS listingId,
+               l.title,
+               l.price,
+               l.photo_url AS "photoUrl"
+        FROM bookings AS b
+          JOIN listings AS l ON b.listing_id = l.id
+        WHERE b.username = $1`, [username]);
 
     const user = new User(userData);
 
