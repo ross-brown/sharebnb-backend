@@ -22,16 +22,6 @@ async function uploadS3({ originalname, buffer, mimetype }) {
   return `${AWS_IMG_URL_BASE}/${name}`;
 }
 
-async function readS3() {
-  const { Body } = await s3.send(new GetObjectCommand({
-    Bucket: AWS_BUCKET_NAME,
-    Key: "my-first-object.txt"
-  }));
-
-  console.log(await Body.transformToString());
-}
-
-
 async function deleteS3(url) {
   const fileName = url.replace(`${AWS_IMG_URL_BASE}/`, "");
 
@@ -43,6 +33,5 @@ async function deleteS3(url) {
   await s3.send(new DeleteObjectCommand(params));
 }
 
-// upload();
-// read();
-export { uploadS3, readS3, deleteS3 };
+
+export { uploadS3, deleteS3 };
