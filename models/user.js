@@ -114,7 +114,7 @@ class User {
     if (!userData) throw new NotFoundError(`No user: ${username}`);
 
     const listingRes = await db.query(`
-        SELECT id AS "listingId",
+        SELECT id AS "id",
                title,
                price,
                photo_url AS "photoUrl"
@@ -123,7 +123,7 @@ class User {
 
     const bookingRes = await db.query(`
         SELECT b.username,
-               b.listing_id AS listingId,
+               b.listing_id AS "id",
                l.title,
                l.price,
                l.photo_url AS "photoUrl"
