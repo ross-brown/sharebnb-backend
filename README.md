@@ -1,7 +1,7 @@
 
 # ShareBnB Backend
 
-A RESTful API for a outdoor space sharing playform built with Express.js. Built to interact with data about users, listings, and messages, as well as authentication/authorization.
+A RESTful API for a outdoor space sharing platform built with Express.js. Built to interact with data about users, listings, and messages, as well as authentication/authorization.
 
 Demo: WIP
 
