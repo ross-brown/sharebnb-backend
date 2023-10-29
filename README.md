@@ -54,6 +54,10 @@ npm start
 - Delete and Edit a Listing
 - Available table in DB, book a listing for certain dates
     -  Possibily add a calender date-picker
+- Admin accounts
+- More filters for searching listings
+- Add TypeScipt with Express 
+
 
 
 
