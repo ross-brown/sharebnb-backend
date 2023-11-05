@@ -1,5 +1,7 @@
-import app from "./app.js"
-import { PORT } from "./config.js"
+"use strict";
+
+const app = require("./app.js");
+const { PORT } = require("./config.js");
 
 app.listen(PORT, function () {
   console.log(`Started on http://localhost:${PORT}`);

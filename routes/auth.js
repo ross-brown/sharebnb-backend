@@ -1,12 +1,14 @@
+"use strict";
+
 /** Routes for authentication. */
 
-import express from "express";
-import User from "../models/user.js";
-import jsonschema from "jsonschema";
-import userAuthSchema from "../schemata/userAuth.json" assert {type: "json"};
-import userNewScehma from "../schemata/userNew.json" assert {type: "json"};
-import { createToken } from "../helpers/token.js";
-import { BadRequestError } from "../expressError.js";
+const express = require("express");
+const User = require("../models/user.js");
+const jsonschema = require("jsonschema");
+const userAuthSchema = require("../schemata/userAuth.json");
+const userNewScehma = require("../schemata/userNew.json");
+const { createToken } = require("../helpers/token.js");
+const { BadRequestError } = require("../expressError.js");
 
 
 const router = express.Router();
@@ -63,4 +65,4 @@ router.post("/register", async function (req, res, next) {
 });
 
 
-export default router;
+module.exports = router;

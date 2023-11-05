@@ -1,15 +1,15 @@
 /** Routes for Listings */
 
-import express from "express";
-import Listing from "../models/listing.js";
-import jsonschema from "jsonschema";
-import lisitngSearchSchema from "../schemata/listingSearch.json" assert {type: "json"};
-import listingNewSchema from "../schemata/listingNew.json" assert {type: "json"};
-import listingUpdateSchema from "../schemata/listingUpdate.json" assert {type: "json"};
-import { upload } from "../middleware/multer.js";
-import { deleteS3, uploadS3 } from "../helpers/s3upload.js";
-import { ensureCorrectOwner, ensureCorrectUser, ensureLoggedIn } from "../middleware/auth.js";
-import { BadRequestError } from "../expressError.js";
+const express = require("express");
+const Listing = require("../models/listing.js");
+const jsonschema = require("jsonschema");
+const lisitngSearchSchema = require("../schemata/listingSearch.json");
+const listingNewSchema = require("../schemata/listingNew.json");
+const listingUpdateSchema = require("../schemata/listingUpdate.json");
+const { upload } = require("../middleware/multer.js");
+const { deleteS3, uploadS3 } = require("../helpers/s3upload.js");
+const { ensureCorrectOwner, ensureCorrectUser, ensureLoggedIn } = require("../middleware/auth.js");
+const { BadRequestError } = require("../expressError.js");
 
 const router = express.Router();
 
@@ -169,5 +169,4 @@ router.delete("/:id", ensureCorrectOwner, async function (req, res, next) {
    return res.json({ deleted: req.params.id });
 });
 
-
-export default router;
+module.exports = router;

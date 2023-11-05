@@ -1,6 +1,6 @@
-import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { AWS_BUCKET_NAME, AWS_IMG_URL_BASE, AWS_REGION } from "../config.js";
-import { v4 as uuid } from "uuid";
+const { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
+const { AWS_BUCKET_NAME, AWS_IMG_URL_BASE, AWS_REGION } = require("../config.js");
+const { v4: uuid } = require("uuid");
 
 const s3 = new S3Client({
   region: AWS_REGION
@@ -34,4 +34,4 @@ async function deleteS3(url) {
 }
 
 
-export { uploadS3, deleteS3 };
+module.exports = { uploadS3, deleteS3 };

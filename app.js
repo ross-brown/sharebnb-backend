@@ -1,13 +1,15 @@
+"use strict";
+
 /** Express app for ShareBnB */
 
-import express from "express";
-import cors from "cors";
-import authRoutes from "./routes/auth.js";
-import usersRoutes from "./routes/users.js";
-import listingsRoutes from "./routes/listings.js";
-import messagesRoutes from "./routes/messages.js";
-import { NotFoundError } from "./expressError.js";
-import { authenticateJWT } from "./middleware/auth.js";
+const express = require("express");
+const cors = require("cors");
+const authRoutes = require("./routes/auth.js");
+const usersRoutes = require("./routes/users.js");
+const listingsRoutes = require("./routes/listings.js");
+const messagesRoutes = require("./routes/messages.js");
+const { NotFoundError } = require("./expressError.js");
+const { authenticateJWT } = require("./middleware/auth.js");
 
 const app = express();
 
@@ -37,4 +39,4 @@ app.use(function (err, req, res, next) {
   });
 });
 
-export default app;
+module.exports =  app;

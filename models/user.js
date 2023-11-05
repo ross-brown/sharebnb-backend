@@ -1,8 +1,9 @@
+"use strict";
 
-import { db } from "../db.js";
-import bcrypt from "bcrypt";
-import { BCRYPT_WORK_FACTOR } from "../config.js";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError.js";
+const { db } = require("../db.js");
+const bcrypt = require("bcrypt");
+const { BCRYPT_WORK_FACTOR } = require("../config.js");
+const { BadRequestError, NotFoundError, UnauthorizedError } = require("../expressError.js");
 
 
 
@@ -212,4 +213,4 @@ class User {
   }
 }
 
-export default User;
+module.exports = User;

@@ -1,9 +1,11 @@
+"use strict";
+
 /** Convenience middleware to handle common auth cases in routes. */
 
-import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "../config.js";
-import { UnauthorizedError } from "../expressError.js";
-import Listing from "../models/listing.js";
+const jwt = require("jsonwebtoken");
+const { SECRET_KEY } = require("../config.js");
+const { UnauthorizedError } = require("../expressError.js");
+const Listing = require("../models/listing.js");
 
 
 /** Middleware: Authenticate user.
@@ -68,6 +70,9 @@ async function ensureCorrectOwner(req, res, next) {
   throw new UnauthorizedError(`You are not the owner of this property.`);
 }
 
-
-
-export { authenticateJWT, ensureLoggedIn, ensureCorrectUser, ensureCorrectOwner };
+module.exports = {
+  authenticateJWT,
+  ensureLoggedIn,
+  ensureCorrectUser,
+  ensureCorrectOwner
+};

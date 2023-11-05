@@ -1,8 +1,9 @@
+"use strict";
 
 /** Database setup for ShareBnB */
 
-import pg from "pg";
-import { getDatabaseUri } from "./config.js";
+const pg = require("pg");
+const { getDatabaseUri } = require("./config.js");
 
 const databaseUri = getDatabaseUri();
 
@@ -21,4 +22,4 @@ async function connectDb() {
 }
 connectDb();
 
-export { db };
+module.exports =  db;

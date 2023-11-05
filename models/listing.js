@@ -1,5 +1,7 @@
-import { db } from "../db.js";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../expressError.js";
+"use strict";
+
+const { db } = require("../db.js");
+const { BadRequestError, NotFoundError, UnauthorizedError } = require("../expressError.js");
 
 
 
@@ -223,4 +225,4 @@ class Listing {
 }
 
 
-export default Listing;
+module.exports = Listing;

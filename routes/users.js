@@ -1,12 +1,14 @@
+"use strict";
+
 /** Routes for users */
 
-import express from "express";
-import User from "../models/user.js";
-import jsonschema from "jsonschema";
-import newUserSchema from '../schemata/userNew.json' assert {type: 'json'};
-import updateUserSchema from '../schemata/userUpdate.json' assert {type: 'json'};
-import { createToken } from "../helpers/token.js";
-import { ensureCorrectUser } from "../middleware/auth.js";
+const express = require("express");
+const User = require("../models/user.js");
+const jsonschema = require("jsonschema");
+const newUserSchema = require('../schemata/userNew.json');
+const updateUserSchema = require('../schemata/userUpdate.json');
+const { createToken } = require("../helpers/token.js");
+const { ensureCorrectUser } = require("../middleware/auth.js");
 
 const router = express.Router();
 
@@ -124,4 +126,4 @@ router.delete("/:username", ensureCorrectUser, async function (req, res, next) {
   return res.json({ deleted: req.params.username });
 });
 
-export default router;
+module.exports = router;

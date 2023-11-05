@@ -1,5 +1,5 @@
-import { db } from "../db.js";
-import { BadRequestError, NotFoundError } from "../expressError.js";
+const { db } = require("../db.js");
+const { BadRequestError, NotFoundError } = require("../expressError.js");
 
 /** Model for messages */
 class Message {
@@ -59,4 +59,4 @@ class Message {
   }
 }
 
-export default Message;
+module.exports = Message;
