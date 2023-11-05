@@ -3,7 +3,7 @@
 
 A RESTful API for a outdoor space sharing platform built with Express.js. Built to interact with data about users, listings, and messages, as well as authentication/authorization.
 
-Demo: https://rbrown-sharebnb.surge.sh
+Demo: https://rbrown-sharebnb.netlify.app
 
 Link to frontend repo: https://github.com/ross-brown/sharebnb-frontend
 ## Tech Stack
