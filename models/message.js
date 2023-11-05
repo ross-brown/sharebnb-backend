@@ -1,4 +1,4 @@
-const { db } = require("../db.js");
+const db = require("../db.js");
 const { BadRequestError, NotFoundError } = require("../expressError.js");
 
 /** Model for messages */
