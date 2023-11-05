@@ -9,6 +9,7 @@ const newUserSchema = require('../schemata/userNew.json');
 const updateUserSchema = require('../schemata/userUpdate.json');
 const { createToken } = require("../helpers/token.js");
 const { ensureCorrectUser } = require("../middleware/auth.js");
+const { BadRequestError } = require("../expressError.js");
 
 const router = express.Router();
 
