@@ -132,7 +132,7 @@ router.delete("/:id/book", ensureLoggedIn, async function (req, res, next) {
 router.patch("/:id", upload.single("photo"), ensureCorrectOwner, async function (req, res, next) {
    const listingRes = await Listing.get(+req.params.id);
    req.body.price = +req.body.price;
-   
+
    const validator = jsonschema.validate(
       req.body,
       listingUpdateSchema,
@@ -146,7 +146,9 @@ router.patch("/:id", upload.single("photo"), ensureCorrectOwner, async function 
    if (req.file) {
       // If the form data includes a new photo, update that photo in s3 AND DB
       const newPhotoUrl = await uploadS3(req.file);
-      await deleteS3(listingRes.photoUrl);
+      if (listingRes.photoUrl) {
+         await deleteS3(listingRes.photoUrl);
+      }
       listingRes.photoUrl = newPhotoUrl;
    }
 
