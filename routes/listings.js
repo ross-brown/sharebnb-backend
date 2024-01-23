@@ -131,7 +131,8 @@ router.delete("/:id/book", ensureLoggedIn, async function (req, res, next) {
 
 router.patch("/:id", upload.single("photo"), ensureCorrectOwner, async function (req, res, next) {
    const listingRes = await Listing.get(+req.params.id);
-
+   req.body.price = +req.body.price;
+   
    const validator = jsonschema.validate(
       req.body,
       listingUpdateSchema,
