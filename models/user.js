@@ -157,7 +157,6 @@ class User {
           email`,
       [this.firstName, this.lastName, this.email, this.username]);
 
-    console.log("result.rows=", result);
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${this.username}`);
