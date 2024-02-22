@@ -70,7 +70,7 @@ class Listing {
    * - title (will find case-insensitive, partial matches)
    *
    * Returns {
-   *  where: "WHEREtitle ILIKE $1",
+   *  where: "WHERE title ILIKE $1",
    *  vals: ['%Beach%']
    * }
    */
