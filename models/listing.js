@@ -147,9 +147,29 @@ class Listing {
 
   /** Book listing with a username
    *
-   * Returns undefined.
+   * Returns { username, listing_id }.
+   * 
+   * Cannot book own listing and throws error if invalid username.
    */
   async book(username) {
+    const userCheck = await db.query(`
+      SELECT * FROM users
+      WHERE username = $1`,
+      [username]);
+
+    if (userCheck.rows.length === 0) {
+      throw new NotFoundError(`Username ${username} does not exist`);
+    }
+
+    const ownerCheck = await db.query(`
+      SELECT * FROM listings
+      WHERE id = $1 AND owner_username = $2
+    `, [this.id, username])
+
+    if (ownerCheck.rows.length > 0) {
+      throw new BadRequestError(`Cannot book your own listing`)
+    }
+
     const result = await db.query(`
       INSERT INTO bookings (username, listing_id)
       VALUES ($1, $2)

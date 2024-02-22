@@ -1,7 +1,7 @@
 "use strict";
 
 const db = require("../db");
-const { NotFoundError } = require("../expressError");
+const { NotFoundError, BadRequestError } = require("../expressError");
 const {
   commonBeforeAll,
   commonBeforeEach,
@@ -50,8 +50,6 @@ describe("create", function () {
   });
 });
 
-
-
 describe("_filterWhereBuilder", function () {
   test("works", function () {
     const { where, values } = Listing._filterWhereBuilder({ title: "test" });
@@ -67,8 +65,6 @@ describe("_filterWhereBuilder", function () {
     expect(values).toEqual([]);
   });
 });
-
-
 
 describe("findAll", function () {
   test("works, no filter", async function () {
@@ -125,8 +121,6 @@ describe("findAll", function () {
   });
 });
 
-
-
 describe("get", function () {
   test("works", async function () {
     const listing = await Listing.get(testListingIds[0]);
@@ -153,8 +147,100 @@ describe("get", function () {
   });
 });
 
-
-//TODO: works / bad request if book own listing / bad requset if username not found
 describe("book", function () {
+  test("works", async function () {
+    const u3ListingId = testListingIds[2];
+    const listing = await Listing.get(u3ListingId);
+    const booking = await listing.book("u1");
+    const allBookings = await db.query(`SELECT * FROM bookings`);
 
+    expect(booking.username).toEqual("u1");
+    expect(booking.listingId).toEqual(u3ListingId);
+    expect(allBookings.rows.some(r => r.username === "u1" && r.listing_id === u3ListingId));
+  });
+
+  test("bad request if booking own listing", async function () {
+    try {
+      const u1ListingId = testListingIds[0];
+      const listing = await Listing.get(u1ListingId);
+      await listing.book("u1");
+      throw new Error("This shouldn't have happened, test failed");
+    } catch (err) {
+      expect(err instanceof BadRequestError).toBeTruthy();
+    }
+  });
+
+  test("not found if username doesn't exist", async function () {
+    try {
+      const u1ListingId = testListingIds[0];
+      const listing = await Listing.get(u1ListingId);
+      await listing.book("nope");
+      throw new Error("This shouldn't have happened, test failed");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+describe("unbook", function () {
+  test("works", async function () {
+    const u1ListingId = testListingIds[0];
+    const listing = await Listing.get(u1ListingId);
+    await listing.unbook("u2");
+
+    const bookings = await db.query(`SELECT * FROM bookings`);
+    expect(bookings.rows.length).toEqual(1);
+  });
+
+  test("not found if booking doesn't exist", async function () {
+    try {
+      const u3ListingId = testListingIds[2];
+      const listing = await Listing.get(u3ListingId);
+      await listing.unbook("u1");
+      throw new Error("This shouldn't have happened, test failed");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+
+  test("not found if username doesn't exist", async function () {
+    try {
+      const u3ListingId = testListingIds[2];
+      const listing = await Listing.get(u3ListingId);
+      await listing.unbook("nope");
+      throw new Error("This shouldn't have happened, test failed");
+    } catch (err) {
+      expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+describe("save", function () {
+  test("works", async function () {
+    const listing = await Listing.get(testListingIds[0]);
+    listing.price = 200;
+    listing.location = "Atlanta";
+    const savedListing = await listing.save();
+
+    expect(savedListing).toEqual({
+      id: testListingIds[0],
+      title: "l1",
+      type: "yard",
+      price: 200,
+      photoUrl: null,
+      description: "very nice",
+      location: "Atlanta",
+      ownerUsername: "u1"
+    });
+  });
+});
+
+describe("delete", function () {
+  test("works", async function () {
+    const listing = await Listing.get(testListingIds[0]);
+    await listing.delete();
+
+    const listings = await db.query(`SELECT * FROM listings`);
+    expect(listings.rows.every(r => r.id !== testListingIds[0])).toBeTruthy();
+  });
 });
