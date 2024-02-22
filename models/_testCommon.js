@@ -7,6 +7,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 
 const testListingIds = [];
 const testBookingIds = [];
+const testMessageIds = [];
 
 async function commonBeforeAll() {
   //delete all messages and users
@@ -35,11 +36,13 @@ async function commonBeforeAll() {
   testListingIds.splice(0, 0, ...resultListings.rows.map(r => r.id));
 
   //create test messages
-  await db.query(`
+  const resultMessages = await db.query(`
       INSERT INTO messages(user_to, user_from, body, sent_at)
       VALUES ('u1', 'u2', 'hello', '2024-01-26 15:47:44.1'),
              ('u2', 'u1', 'hey', '2024-01-27 15:47:44.1')
+      RETURNING message_id
   `);
+  testMessageIds.splice(0, 0, ...resultMessages.rows.map(r => r.message_id));
 
   //create test bookings
   const resultBookings = await db.query(`
@@ -72,5 +75,6 @@ module.exports = {
   commonAfterEach,
   commonAfterAll,
   testListingIds,
-  testBookingIds
+  testBookingIds,
+  testMessageIds
 };

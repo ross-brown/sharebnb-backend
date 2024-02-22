@@ -9,7 +9,6 @@ class Message {
    *
    */
   static async create({ sender, recipient, body }) {
-    console.log("sender=", sender, "rec=", recipient);
     const recipientCheck = await db.query(`
               SELECT username
               FROM users
@@ -19,7 +18,6 @@ class Message {
     const validRec = recipientCheck.rows[0];
 
     if (!validRec) {
-      console.log("no recipient", recipient);
       throw new BadRequestError(`Can't send to ${recipient}`);
     }
 
