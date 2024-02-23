@@ -99,6 +99,7 @@ async function commonAfterAll() {
 
 const u1Token = createToken({ username: "u1" });
 const u2Token = createToken({ username: "u2" });
+const u3Token = createToken({ username: "u3" });
 
 module.exports = {
   commonBeforeAll,
@@ -109,5 +110,6 @@ module.exports = {
   testMessageIds,
   testBookingIds,
   u1Token,
-  u2Token
+  u2Token,
+  u3Token
 };
