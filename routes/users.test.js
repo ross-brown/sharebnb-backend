@@ -162,6 +162,6 @@ describe("GET /users/:username/sent", function () {
 // bad request with incorrect/missing data
 // bad request with duplicate username
 
-describe("POST /users", function () {
+// describe("POST /users", function () {
 
-});
+// });
