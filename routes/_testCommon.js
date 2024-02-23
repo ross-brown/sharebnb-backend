@@ -97,7 +97,6 @@ async function commonAfterAll() {
   await db.end();
 }
 
-// potentially need token to send in authorization header to be logged in
 const u1Token = createToken({ username: "u1" });
 const u2Token = createToken({ username: "u2" });
 
