@@ -96,8 +96,8 @@ class User {
   /** Get a user by username
    *
    *  Return {username, firstName, lastName, email, bookings, listings}
-   *   where listings : [ listingId, title, price, photoUrl ]
-   *   where booking : [ listingId, title, price, photUrl ]
+   *   where listings : [ id, title, price, photoUrl ]
+   *   where booking : [ id, title, price, photoUrl, username ]
    *
    *  ThrowNotFoundError if user not found
    */

@@ -29,8 +29,8 @@ router.get("/", async function (req, res, next) {
  *
  *  Returns an instance of a user like {user: { User }}
  *  where User is { username, firstName, lastName, email, listings, bookings }
- *   where listings is [ listingId, title, price, photUrl ]
- *   where bookings is [ listingId, title, price, photUrl ]
+ *   where listings is [ id, title, price, photoUrl ]
+ *   where bookings is [ id, title, price, photoUrl, username ]
  */
 router.get("/:username", async function (req, res, next) {
   const user = await User.get(req.params.username);
