@@ -3,7 +3,7 @@
 const express = require("express");
 const Listing = require("../models/listing.js");
 const jsonschema = require("jsonschema");
-const lisitngSearchSchema = require("../schemata/listingSearch.json");
+const listingSearchSchema = require("../schemata/listingSearch.json");
 const listingNewSchema = require("../schemata/listingNew.json");
 const listingUpdateSchema = require("../schemata/listingUpdate.json");
 const { upload } = require("../middleware/multer.js");
@@ -61,7 +61,7 @@ router.post("/", upload.single("photo"), ensureLoggedIn, async function (req, re
 router.get("/", async function (req, res, next) {
    const validator = jsonschema.validate(
       req.query,
-      lisitngSearchSchema,
+      listingSearchSchema,
       { required: true });
 
    if (!validator.valid) {
