@@ -272,17 +272,27 @@ describe("PATCH /users/:username", function () {
 
 });
 
+describe("DELETE /users/:username", function () {
+  test("works with correct user", async function () {
+    const resp = await request(app)
+      .delete("/users/u1")
+      .set("authorization", `Bearer ${u1Token}`);
 
-//works with correct user
-//unauth for wrong user
-//unauth for anon
+    expect(resp.body).toEqual({ deleted: "u1" });
+  });
 
-// describe("DELETE /users/:username", function () {
-//   test("works with correct user", async function () {
-//     const resp = await request(app)
-//       .delete("/users/u1")
-//       .set("authorization", `Bearer ${u1Token}`);
+  test("unauth for wrong user", async function () {
+    const resp = await request(app)
+      .delete("/users/u1")
+      .set("authorization", `Bearer ${u2Token}`);
 
-//     expect(resp.body).toEqual({ deleted: "u1" });
-//   });
-// });
+    expect(resp.statusCode).toEqual(401);
+  });
+
+  test("unauth for anon", async function () {
+    const resp = await request(app)
+      .delete("/users/u1");
+
+    expect(resp.statusCode).toEqual(401);
+  });
+});
