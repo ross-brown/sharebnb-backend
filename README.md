@@ -50,8 +50,8 @@ npm start
 
 ## Future Features
 
-- Write tests
-- Delete and Edit a Listing
+- Write tests ✅
+- Delete and Edit a Listing ✅
 - Available table in DB, book a listing for certain dates
     -  Possibily add a calender date-picker
 - Admin accounts
