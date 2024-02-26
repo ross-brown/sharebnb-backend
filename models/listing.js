@@ -148,7 +148,7 @@ class Listing {
   /** Book listing with a username
    *
    * Returns { username, listing_id }.
-   * 
+   *
    * Cannot book own listing and throws error if invalid username.
    */
   async book(username) {
@@ -164,10 +164,19 @@ class Listing {
     const ownerCheck = await db.query(`
       SELECT * FROM listings
       WHERE id = $1 AND owner_username = $2
-    `, [this.id, username])
+    `, [this.id, username]);
 
     if (ownerCheck.rows.length > 0) {
-      throw new BadRequestError(`Cannot book your own listing`)
+      throw new BadRequestError(`Cannot book your own listing`);
+    }
+
+    const bookingCheck = await db.query(`
+      SELECT * FROM bookings
+      WHERE username = $1 AND listing_id = $2
+    `, [username, this.id]);
+
+    if (bookingCheck.rows.length > 0) {
+      throw new BadRequestError(`You already booked this listing`);
     }
 
     const result = await db.query(`

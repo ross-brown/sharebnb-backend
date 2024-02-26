@@ -7,7 +7,7 @@ const s3 = new S3Client({
 });
 
 
-/** uploads a file to s3 */
+/** uploads a file to s3 and return URL `[AWS_BASE_URL]/2j3k4l-photo */
 async function uploadS3({ originalname, buffer, mimetype }) {
   const name = `${uuid()}-${originalname}`;
 
